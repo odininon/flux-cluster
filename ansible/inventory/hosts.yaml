@@ -1,0 +1,13 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k3s-new-01:
+          ansible_user: serveradmin
+          ansible_host: 192.168.3.10
+    worker:
+      hosts:
+        k3s-new-02:
+          ansible_user: serveradmin
+          ansible_host: 192.168.3.11
