@@ -35,8 +35,6 @@ spec:
             image:
               repository: ghcr.io/odininon/phoenix_hello_demo
               tag: 1.0.2
-            env:
-              PORT: &port
             envFrom:
               - secretRef:
                   name: phoenix-app
@@ -47,7 +45,7 @@ spec:
                 spec:
                   httpGet:
                     path: /
-                    port: *port
+                    port: &port 4000
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
