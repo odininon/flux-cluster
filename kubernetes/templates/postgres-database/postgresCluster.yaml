@@ -8,6 +8,9 @@ spec:
   dataSource:
     pgbackrest:
       stanza: db
+      configuration:
+        - secret:
+            name: pgo-s3-creds
       global:
         repo1-path: "/${APP}/repo1"
         repo1-s3-uri-style: path
@@ -44,6 +47,9 @@ spec:
         type: AlphaNumeric
   backups:
     pgbackrest:
+      configuration:
+        - secret:
+            name: pgo-s3-creds
       global:
         archive-push-queue-max: 4GiB
         repo1-retention-full: "14"
