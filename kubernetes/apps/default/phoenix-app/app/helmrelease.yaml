@@ -36,7 +36,8 @@ spec:
               repository: ghcr.io/odininon/phoenix_hello_demo
               tag: 1.0.2
             env:
-              PORT: &port 4000
+              PORT: &port
+              SECRET_KEY_BASE: "tjdP3TmItqXqj9Nq+iYhaLPfmZYFmXTxeV9/Wpfk6HUP3PzdciVLtxNSpw/ZTQaA"
             envFrom:
               - secretRef:
                   name: phoenix-app
