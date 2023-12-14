@@ -24,15 +24,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      imagePullSecrets:
-        - name: phoenix-app-regcred
     controllers:
       main:
         replicas: 2
         strategy: RollingUpdate
         containers:
           main:
+            imagePullSecrets:
+              - name: phoenix-app-regcred
             image:
               repository: ghcr.io/odininon/phoenix_hello_demo
               tag: 1.0.2
