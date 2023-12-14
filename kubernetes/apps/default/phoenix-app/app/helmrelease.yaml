@@ -37,7 +37,7 @@ spec:
               PORT: &port 4000
             envFrom:
               - secretRef:
-                name: phoenix-app
+                  name: phoenix-app
             probes:
               liveness: &probes
                 enabled: true
