@@ -79,7 +79,12 @@ spec:
       main:
         ports:
           http:
+            primary: true
             port: 7350
+            protocol: HTTP
+          dashboard:
+            port: 7351
+            protocol: HTTP
     ingress:
       main:
         enabled: true
@@ -94,6 +99,22 @@ spec:
                 service:
                   name: main
                   port: http
+        tls:
+          - hosts:
+              - *host
+      dashboard:
+        enabled: true
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: "internal.${SECRET_DOMAIN}"
+          hajimari.io/icon: video-input-antenna
+        hosts:
+          - host: &host "{{ .Release.Name }}-dashboard.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: dashboard
         tls:
           - hosts:
               - *host
