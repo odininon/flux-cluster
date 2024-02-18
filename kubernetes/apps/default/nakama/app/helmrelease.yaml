@@ -47,6 +47,23 @@ spec:
         strategy: RollingUpdate
         containers:
           main:
+            envValueFrom:
+              POSTGRESQL__HOST:
+                secretKeyRef:
+                  name: "${APP}-pguser-${DB_USER}"
+                  key: host
+              POSTGRESQL__NAME:
+                secretKeyRef:
+                  name: "${APP}-pguser-${DB_USER}"
+                  key: dbname
+              POSTGRESQL__USER:
+                secretKeyRef:
+                  name: "${APP}-pguser-${DB_USER}"
+                  key: user
+              POSTGRESQL__PASSWORD:
+                secretKeyRef:
+                  name: "${APP}-pguser-${DB_USER}"
+                  key: password
             image:
               repository: registry.heroiclabs.com/heroiclabs/nakama
               tag: 3.20.1
