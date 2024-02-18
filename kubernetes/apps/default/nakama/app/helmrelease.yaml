@@ -24,6 +24,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    envValueFrom:
+      POSTGRESQL__HOST:
+        secretKeyRef:
+          name: "${APP}-pguser-${DB_USER}"
+          key: host
+      POSTGRESQL__NAME:
+        secretKeyRef:
+          name: "${APP}-pguser-${DB_USER}"
+          key: dbname
+      POSTGRESQL__USER:
+        secretKeyRef:
+          name: "${APP}-pguser-${DB_USER}"
+          key: user
+      POSTGRESQL__PASSWORD:
+        secretKeyRef:
+          name: "${APP}-pguser-${DB_USER}"
+          key: password
     controllers:
       main:
         replicas: 2
@@ -33,9 +50,8 @@ spec:
             image:
               repository: registry.heroiclabs.com/heroiclabs/nakama
               tag: 3.20.1
-            # envFrom:
-            #   - secretRef:
-            #       name: phoenix-app
+            command: ["/bin/sh"]
+            args: ["-ecx", "/nakama/nakama migrate up --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) && exec /nakama/nakama --name nakama1 --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) --logger.level DEBUG --session.token_expiry_sec 7200"]
             probes:
               liveness: &probes
                 enabled: true
