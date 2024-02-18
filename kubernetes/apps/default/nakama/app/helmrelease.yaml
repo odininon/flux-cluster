@@ -34,7 +34,7 @@ spec:
               repository: registry.heroiclabs.com/heroiclabs/nakama
               tag: 3.20.1
             command: ["/bin/sh"]
-            args: ["-ecx", "/nakama/nakama migrate up --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) && exec /nakama/nakama --name nakama1 --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) --logger.level DEBUG --session.token_expiry_sec 7200"]
+            args: ["-ecx", "/nakama/nakama migrate up --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) && exec /nakama/nakama --name nakama1 --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) --logger.level DEBUG --session.token_expiry_sec 7200 --socket.server_key $(SOCKET_SERVER_KEY) --runtime.http_key $(RUNTIME_HTTP_KEY) --session.encryption_key $(SESSION_ENCRYPTION_KEY) --session.refresh_encryption_key $(SESSION_REFRESH_ENCRYPTION_KEY)"]
             env:
               POSTGRESQL__HOST:
                 secretKeyRef:
@@ -52,6 +52,22 @@ spec:
                 secretKeyRef:
                   name: "${APP}-pguser-${DB_USER}"
                   key: password
+              SOCKET_SERVER_KEY:
+                secretKeyRef:
+                  name: "nakama"
+                  key: SOCKET_SERVER_KEY
+              RUNTIME_HTTP_KEY:
+                secretKeyRef:
+                  name: "nakama"
+                  key: RUNTIME_HTTP_KEY
+              SESSION_ENCRYPTION_KEY:
+                secretKeyRef:
+                  name: "nakama"
+                  key: SESSION_ENCRYPTION_KEY
+              SESSION_REFRESH_ENCRYPTION_KEY:
+                secretKeyRef:
+                  name: "nakama"
+                  key: SESSION_REFRESH_ENCRYPTION_KEY
             probes:
               liveness: &probes
                 enabled: true
