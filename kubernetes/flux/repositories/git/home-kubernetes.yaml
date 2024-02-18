@@ -7,3 +7,5 @@ metadata:
 spec:
   interval: 30m
   url: https://github.com/odininon/flux-cluster.git
+  ref:
+    branch: main
