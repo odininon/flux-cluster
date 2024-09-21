@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: registry.heroiclabs.com/heroiclabs/nakama
-              tag: 3.20.1
+              tag: 3.23.0
             command: ["/bin/sh"]
             args: ["-ecx", "/nakama/nakama migrate up --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) && exec /nakama/nakama --name nakama1 --database.address $(POSTGRESQL__USER):$(POSTGRESQL__PASSWORD)@$(POSTGRESQL__HOST):5432/$(POSTGRESQL__NAME) --logger.level DEBUG --session.token_expiry_sec 7200 --socket.server_key $(SOCKET_SERVER_KEY) --runtime.http_key $(RUNTIME_HTTP_KEY) --session.encryption_key $(SESSION_ENCRYPTION_KEY) --session.refresh_encryption_key $(SESSION_REFRESH_ENCRYPTION_KEY) --social.steam.app_id $(STEAM_APP_ID) --social.steam.publisher_key $(STEAM_PUBLISHER_KEY)"]
             env:
